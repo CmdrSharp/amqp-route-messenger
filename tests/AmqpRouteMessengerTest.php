@@ -10,6 +10,8 @@ class AmqpRouteMessengerTest extends TestCase
 
     public function setUp()
     {
+        parent::setUp();
+        
         $this->client = new Client();
     }
 
