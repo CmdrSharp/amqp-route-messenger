@@ -76,11 +76,20 @@ class AmqpRouteMessengerTest extends Orchestra\Testbench\TestCase
     }
 
     /** @test */
-    public function can_read_message()
+    public function can_publish_and_read_message()
     {
-        $instance = $this->client->declareExchange('foobar')->declareQueue();
-        $response = $instance->read();
+        $instance_publisher = $this->client;
+        $instance_consumer = $this->client;
 
-        $this->assertNotEmpty($response);
+        $instance_consumer->declareExchange('foobar_test')
+            ->declareQueue()
+            ->bindQueue('correlationFoobar');
+
+        $instance_publisher->declareExchange('foobar_test')
+            ->publish('correlationFoobar', 'I am a message');
+
+        $consumer_response = $instance_consumer->read();
+
+        $this->assertEquals('I am a message', $consumer_response);
     }
 }
