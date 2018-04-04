@@ -50,19 +50,27 @@ class AmqpRouteMessengerTest extends Orchestra\Testbench\TestCase
     /** @test */
     public function queue_name_not_empty()
     {
-        $this->assertNotEmpty($this->client->getQueue());
+        $instance = $this->client->declareExchange('foobar')->declareQueue();
+
+        $this->assertNotEmpty($instance->getQueue());
     }
 
     /** @test */
     public function can_bind_queue()
     {
-        $this->assertInstanceOf(ClientInterface::class, $this->client->bindQueue('foo-bar-qu-qux'));
+        $instance = $this->client->declareExchange('foobar')->declareQueue()->bindQueue('foo-bar');
+
+        $this->assertInstanceOf(ClientInterface::class, $instance);
     }
 
     /** @test */
     public function can_publish_message()
     {
-        $response = $this->client->publish('foo-bar-qu-qux', 'foobar');
+        $instance = $this->client->declareExchange('foobar')
+            ->declareQueue()
+            ->bindQueue('foo-bar');
+
+        $response = $instance->publish('foobar-barfoo', 'foobar');
 
         $this->assertTrue($response);
     }
@@ -70,7 +78,8 @@ class AmqpRouteMessengerTest extends Orchestra\Testbench\TestCase
     /** @test */
     public function can_read_message()
     {
-        $response = $this->client->read();
+        $instance = $this->client->declareExchange('foobar')->declareQueue();
+        $response = $instance->read();
 
         $this->assertNotEmpty($response);
     }
