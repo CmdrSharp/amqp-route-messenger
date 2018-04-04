@@ -3,6 +3,7 @@
 namespace CmdrSharp\AmqpRouteMessenger;
 
 use PhpAmqpLib\Connection\AMQPStreamConnection;
+use Illuminate\Support\Facades\Config;
 use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Message\AMQPMessage;
 use Log;
@@ -30,11 +31,11 @@ class Client implements ClientInterface
     public function __construct()
     {
         $this->connection = new AMQPStreamConnection(
-            config('amqproutemessenger.rabbitmq_host'),
-            config('amqproutemessenger.rabbitmq_port'),
-            config('amqproutemessenger.rabbitmq_login'),
-            config('amqproutemessenger.rabbitmq_password'),
-            config('amqproutemessenger.rabbitmq_vhost')
+            Config::get('amqproutemessenger.rabbitmq_host'),
+            Config::get('amqproutemessenger.rabbitmq_port'),
+            Config::get('amqproutemessenger.rabbitmq_login'),
+            Config::get('amqproutemessenger.rabbitmq_password'),
+            Config::get('amqproutemessenger.rabbitmq_vhost')
         );
     }
 
