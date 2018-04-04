@@ -1,18 +1,29 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
 use CmdrSharp\AmqpRouteMessenger\Client;
 
-class AmqpRouteMessengerTest extends TestCase
+class AmqpRouteMessengerTest extends Orchestra\Testbench\TestCase
 {
     /** @var Client */
     protected $client;
 
+    /**
+     * Setup the test environment.
+     */
     public function setUp()
     {
         parent::setUp();
-        
+
         $this->client = new Client();
+    }
+
+    /**
+     * @param \Illuminate\Foundation\Application $app
+     * @return array
+     */
+    protected function getPackageProviders($app)
+    {
+        return ['CmdrSharp\AmqpRouteMessenger\AmqpRouteMessengerServiceProvider'];
     }
 
     /** @test */

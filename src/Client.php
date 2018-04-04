@@ -27,9 +27,19 @@ class Client implements ClientInterface
 
     /**
      * Factory constructor.
+     * @param null|string $host
+     * @param int|null $port
+     * @param null|string $login
+     * @param null|string $password
+     * @param null|string $vhost
      */
-    public function __construct()
-    {
+    public function __construct(
+        ?string $host = null,
+        ?int $port = null,
+        ?string $login = null,
+        ?string $password = null,
+        ?string $vhost = null
+    ) {
         $this->connection = new AMQPStreamConnection(
             Config::get('amqproutemessenger.rabbitmq_host'),
             Config::get('amqproutemessenger.rabbitmq_port'),
