@@ -56,9 +56,10 @@ class Client implements ClientInterface
      * Declares an Exchange.
      *
      * @param string $exchange_name
+     * @param bool $passive
      * @return Client
      */
-    public function declareExchange(string $exchange_name): ClientInterface
+    public function declareExchange(string $exchange_name, bool $passive = false): ClientInterface
     {
         if (!$this->channel) {
             $this->channel = $this->connection->channel();
@@ -69,7 +70,7 @@ class Client implements ClientInterface
         $this->channel->exchange_declare(
             $this->exchange_name,
             'direct',
-            false,
+            $passive,
             false,
             false
         );
@@ -80,9 +81,10 @@ class Client implements ClientInterface
     /**
      * Declares a randomly generated queue.
      *
+     * @param bool $passive
      * @return Client
      */
-    public function declareQueue(): ClientInterface
+    public function declareQueue(bool $passive = false): ClientInterface
     {
         if (!$this->channel) {
             $this->channel = $this->connection->channel();
@@ -90,7 +92,7 @@ class Client implements ClientInterface
 
         list($this->queue_name, ,) = $this->channel->queue_declare(
             "",
-            false,
+            $passive,
             false,
             true,
             false

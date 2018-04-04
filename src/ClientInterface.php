@@ -9,14 +9,16 @@ interface ClientInterface
 {
     /**
      * @param string $exchange_name
+     * @param bool $passive
      * @return ClientInterface
      */
-    public function declareExchange(string $exchange_name): ClientInterface;
+    public function declareExchange(string $exchange_name, bool $passive = false): ClientInterface;
 
     /**
+     * @param bool $passive
      * @return ClientInterface
      */
-    public function declareQueue(): ClientInterface;
+    public function declareQueue(bool $passive = false): ClientInterface;
 
     /**
      * @param string $correlation_id
