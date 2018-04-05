@@ -1,4 +1,9 @@
 # About
+[![Latest Stable Version](https://poser.pugx.org/cmdrsharp/amqp-route-messenger/v/stable)](https://packagist.org/packages/cmdrsharp/amqp-route-messenger)
+[![Latest Unstable Version](https://poser.pugx.org/cmdrsharp/amqp-route-messenger/v/unstable)](https://packagist.org/packages/cmdrsharp/amqp-route-messenger)
+[![Build Status](https://travis-ci.org/CmdrSharp/amqp-route-messenger.svg?branch=master)](https://travis-ci.org/CmdrSharp/amqp-route-messenger)
+[![StyleCI](https://styleci.io/repos/128116950/shield?branch=master)](https://styleci.io/repos/128116950)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/CmdrSharp/amqp-route-messenger/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/CmdrSharp/amqp-route-messenger/?branch=master)
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 
 A client for publishing and listening for routed exchange messages.
