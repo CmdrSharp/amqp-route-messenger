@@ -90,7 +90,7 @@ class Client implements ClientInterface
             $this->channel = $this->connection->channel();
         }
 
-        list($this->queue_name, , ) = $this->channel->queue_declare(
+        list($this->queue_name,,) = $this->channel->queue_declare(
             "",
             $passive,
             false,
@@ -133,11 +133,11 @@ class Client implements ClientInterface
             throw new \ErrorException('An exchange has not been defined.');
         }
 
-        $this->channel->set_ack_handler(function (AMQPMessage $message) {
+        $this->channel->set_ack_handler(function(AMQPMessage $message) {
             Log::info('AMQP Message ACK');
         });
 
-        $this->channel->set_nack_handler(function (AMQPMessage $message) {
+        $this->channel->set_nack_handler(function(AMQPMessage $message) {
             Log::error('AMQP Message NACK');
         });
 
@@ -161,7 +161,7 @@ class Client implements ClientInterface
             throw new \ErrorException('A queue, or exchange, have not been defined.');
         }
 
-        $callback = function ($msg) {
+        $callback = function($msg) {
             return $this->response = $msg->body;
         };
 
