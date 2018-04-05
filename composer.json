@@ -29,6 +29,9 @@
       "providers": [
         "CmdrSharp\\AmqpRouteMessenger\\AmqpRouteMessengerServiceProvider"
       ]
+    },
+    "branch-alias": {
+        "dev-master": "1.0.0.0-RC1"
     }
   },
   "scripts": {
