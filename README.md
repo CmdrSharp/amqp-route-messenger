@@ -33,6 +33,12 @@ RABBITMQ_LOGIN=
 RABBITMQ_PASSWORD=
 ```
 
+For SSL Connections, just specify (in your .env file) the path to the CA Certificate, and whether to use peer verification. If these are specified, an `AMQPSSLConnection` will be established.
+```
+RABBITMQ_CA_FILE="/path/to/yourca.crt"
+RABBITMQ_VERIFY_PEER=true
+```
+
 # Usage
 Inject the contract into the class where you need the client:
 ```php
