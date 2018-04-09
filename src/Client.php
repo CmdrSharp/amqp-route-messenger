@@ -45,7 +45,7 @@ class Client implements ClientInterface
                 'connection_timeout' => config('amqproutemessenger.connection_timeout', 3.0),
                 'read_write_timeout' => config('amqproutemessenger.read_write_timeout', 3.0),
                 'keepalive' => config('amqproutemessenger.keepalive', false),
-                'hearttbeat' => config('amqproutemessenger.heartbeat', 0)
+                'heartbeat' => config('amqproutemessenger.heartbeat', 0)
             ]
         );
     }
@@ -124,7 +124,7 @@ class Client implements ClientInterface
             $this->channel = $this->connection->channel();
         }
 
-        list($this->queue_name, , ) = $this->channel->queue_declare(
+        list($this->queue_name, ,) = $this->channel->queue_declare(
             "",
             $passive,
             false,
