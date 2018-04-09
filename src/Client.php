@@ -71,13 +71,11 @@ class Client implements ClientInterface
      */
     private function createSslContext(): array
     {
-        $ca_path = config('amqproutemessenger.ca_path', '');
-        $ca_file = config('amqproutemessenger.ca_file', '');
+        $ca_file = config('amqproutemessenger.ca_file', null);
         $verify_peer = config('amqproutemessenger.verify_peer', false);
 
-        if (!empty($ca_path) && !empty($ca_file)) {
+        if (null !== $ca_file) {
             return [
-                'capath' => $ca_path,
                 'cafile' => $ca_file,
                 'verify_peer' => $verify_peer
             ];

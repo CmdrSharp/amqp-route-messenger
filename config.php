@@ -18,7 +18,6 @@ return [
     'heartbeat' => env('RABBITMQ_HEARTBEAT', 0),
 
     // SSL Options
-    'ca_path' => env('RABBITMQ_CA_PATH', ''),
     'ca_file' => env('RABBITMQ_CA_FILE', ''),
     'verify_peer' => env('RABBITMQ_VERIFY_PEER', false)
 ];
