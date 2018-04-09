@@ -3,6 +3,7 @@
 namespace CmdrSharp\AmqpRouteMessenger;
 
 use PhpAmqpLib\Connection\AMQPStreamConnection;
+use PhpAmqpLib\Connection\AMQPSSLConnection;
 use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Message\AMQPMessage;
 use Log;
@@ -29,12 +30,23 @@ class Client implements ClientInterface
      */
     public function __construct()
     {
-        $this->connection = new AMQPStreamConnection(
-            config('amqproutemessenger.rabbitmq_host', 'localhost'),
-            config('amqproutemessenger.rabbitmq_port', '5672'),
-            config('amqproutemessenger.rabbitmq_login', 'guest'),
-            config('amqproutemessenger.rabbitmq_password', 'guest'),
-            config('amqproutemessenger.rabbitmq_vhost', '/')
+        $this->connection = new AMQPSSLConnection(
+            config('amqproutemessenger.host', 'localhost'),
+            config('amqproutemessenger.port', '5672'),
+            config('amqproutemessenger.login', 'guest'),
+            config('amqproutemessenger.password', 'guest'),
+            config('amqproutemessenger.vhost', '/'),
+            $this->createSslContext(),
+            [
+                'insist' => config('amqproutemessenger.insist', false),
+                'login_method' => config('amqproutemessenger.login_method', 'AMQPLAIN'),
+                'login_response' => null,
+                'locale' => config('amqproutemessenger.locale', 'en_US'),
+                'connection_timeout' => config('amqproutemessenger.connection_timeout', 3.0),
+                'read_write_timeout' => config('amqproutemessenger.read_write_timeout', 3.0),
+                'keepalive' => config('amqproutemessenger.keepalive', false),
+                'hearttbeat' => config('amqproutemessenger.heartbeat', 0)
+            ]
         );
     }
 
@@ -50,6 +62,28 @@ class Client implements ClientInterface
         if ($this->connection && $this->connection->isConnected()) {
             $this->connection->close();
         }
+    }
+
+    /**
+     * Generates an array of SSL Options if specified.
+     *
+     * @return array
+     */
+    private function createSslContext(): array
+    {
+        $ca_path = config('amqproutemessenger.ca_path', '');
+        $ca_file = config('amqproutemessenger.ca_file', '');
+        $verify_peer = config('amqproutemessenger.verify_peer', false);
+
+        if (!empty($ca_path) && !empty($ca_file)) {
+            return [
+                'capath' => $ca_path,
+                'cafile' => $ca_file,
+                'verify_peer' => $verify_peer
+            ];
+        }
+
+        return [];
     }
 
     /**
@@ -90,7 +124,7 @@ class Client implements ClientInterface
             $this->channel = $this->connection->channel();
         }
 
-        list($this->queue_name, , ) = $this->channel->queue_declare(
+        list($this->queue_name, ,) = $this->channel->queue_declare(
             "",
             $passive,
             false,
