@@ -34,9 +34,10 @@ interface ClientInterface
     public function publish(string $correlation_id, string $message): bool;
 
     /**
+     * @param int $timeout
      * @return string
      */
-    public function read(): string;
+    public function read(int $timeout = 0): string;
 
     /**
      * @return ClientInterface

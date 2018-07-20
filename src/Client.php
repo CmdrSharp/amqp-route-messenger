@@ -122,7 +122,7 @@ class Client implements ClientInterface
             $this->channel = $this->connection->channel();
         }
 
-        list($this->queue_name, , ) = $this->channel->queue_declare(
+        list($this->queue_name, ,) = $this->channel->queue_declare(
             "",
             $passive,
             false,
@@ -184,10 +184,11 @@ class Client implements ClientInterface
     /**
      * Reads from a routed exchange and returns the response.
      *
+     * @param int $timeout
      * @return mixed
      * @throws \ErrorException
      */
-    public function read(): string
+    public function read(int $timeout = 0): string
     {
         if (!$this->queue_name || !$this->channel) {
             throw new \ErrorException('A queue, or exchange, have not been defined.');
@@ -208,7 +209,7 @@ class Client implements ClientInterface
         );
 
         while ($this->response === null && count($this->channel->callbacks)) {
-            $this->channel->wait();
+            $this->channel->wait(null, false, $timeout);
         }
 
         return $this->response;

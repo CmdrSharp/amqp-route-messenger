@@ -103,7 +103,7 @@ $instance = $this->client->declareExchange('messages')
 
 $instance->publish('correlation_id', 'your message');
 
-$message = $instance->read();
+$message = $instance->read(10); // Optional timeout in seconds.
 
 $instance->closeChannel()->closeConnection();
 ```
