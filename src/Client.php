@@ -122,7 +122,7 @@ class Client implements ClientInterface
             $this->channel = $this->connection->channel();
         }
 
-        list($this->queue_name, ,) = $this->channel->queue_declare(
+        list($this->queue_name, , ) = $this->channel->queue_declare(
             "",
             $passive,
             false,
