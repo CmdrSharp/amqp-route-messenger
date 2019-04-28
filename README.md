@@ -8,8 +8,8 @@
 A client for publishing and listening for routed exchange messages.
 
 # Current Requirements
-* PHP 7.2 - PHP 7.3
-* Laravel [5.8](https://laravel.com/docs/5.8)
+* PHP 7.2 or newer
+* Laravel [5.8](https://laravel.com/docs/5.8) or newer
 
 # Installation
 Via composer
